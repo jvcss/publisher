@@ -1,0 +1,11 @@
+name: crm-laravel
+kind: docker
+fqdn: crm.example.com
+ssl: true
+apache: { template: fastapi.conf.j2, http_to_https: true, log_prefix: crm }
+docker:
+  compose_path: /srv/crm-laravel/docker-compose.yml
+  project: crm_laravel
+  publish:
+    http_target: 127.0.0.1:9000 # container host-port exposed
+scm: { repo: git@github.com:org/crm-laravel.git, branch: main }

@@ -1,0 +1,18 @@
+<VirtualHost *:80>
+    ServerName {{ fqdn }}
+
+    ProxyPreserveHost On
+    ProxyRequests Off
+
+    RequestHeader set X-Forwarded-Proto "https"
+    RequestHeader set X-Forwarded-Port "443"
+
+    ProxyPass "/_stcore/" "ws://{{ backend_host }}:{{ backend_port }}/_stcore/"
+    ProxyPassReverse "/_stcore/" "ws://{{ backend_host }}:{{ backend_port }}/_stcore/"
+
+    ProxyPass "/" "http://{{ backend_host }}:{{ backend_port }}/"
+    ProxyPassReverse "/" "http://{{ backend_host }}:{{ backend_port }}/"
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ log_prefix }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ log_prefix }}_access.log combined
+</VirtualHost>

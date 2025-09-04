@@ -1,0 +1,14 @@
+[Unit]
+Description=%i Streamlit Service
+After=network.target
+
+[Service]
+User={{ user }}
+Group={{ group }}
+WorkingDirectory={{ workdir }}
+ExecStart={{ cmd }}
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+    app:
+        image: ghcr.io/org/{{ name }}:latest
+        container_name: {{ name }}
+        restart: unless-stopped
+        env_file: .env
+        ports:
+            - "{{ docker.publish.http_target.split(':')[0] }}:{{ docker.publish.http_target.split(':')[1] }}:80" # host:container
+        volumes:
+            - ./storage:/var/www/html/storage
+            - ./public:/var/www/html/public

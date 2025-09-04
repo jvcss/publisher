@@ -1,0 +1,12 @@
+name: auvo-web
+kind: flutter
+fqdn: auvo.example.com
+ssl: true
+apache: { template: flutter.conf.j2, http_to_https: true, log_prefix: auvo }
+flutter:
+  document_root: /var/www/auvo_web
+  artifact_dir: build/web # path inside repo/artifact
+scm: { repo: git@github.com:org/auvo-web.git, branch: main }
+deploy:
+  strategy: native
+  preinstall: []

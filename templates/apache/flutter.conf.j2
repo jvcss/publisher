@@ -1,0 +1,13 @@
+<VirtualHost *:80>
+    ServerName {{ fqdn }}
+
+    DocumentRoot {{ docroot }}
+    <Directory {{ docroot }}>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ log_prefix }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ log_prefix }}_access.log combined
+</VirtualHost>

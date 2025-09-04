@@ -1,0 +1,14 @@
+[Unit]
+Description=%i FastAPI Backend Service
+After=network.target
+
+[Service]
+User={{ user }}
+Group={{ group }}
+WorkingDirectory={{ workdir }}
+ExecStart={{ venv }}/bin/uvicorn {{ uvicorn_module }} --host 127.0.0.1 --port {{ port }} {{ uvicorn_args }}
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

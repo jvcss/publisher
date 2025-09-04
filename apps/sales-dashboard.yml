@@ -1,0 +1,17 @@
+name: sales-dashboard
+kind: streamlit
+fqdn: dashboard.example.com
+ssl: true
+apache: { template: streamlit.conf.j2, http_to_https: true, log_prefix: streamlit }
+backend:
+  host: 127.0.0.1
+  port: 8501
+  working_dir: /srv/sales-dashboard
+  entrypoint:
+    venv: /srv/sales-dashboard/.venv
+    cmd: ".venv/bin/streamlit run app.py --server.port=8501 --server.address=127.0.0.1"
+service: { template: streamlit.service.j2, user: ubuntu, group: ubuntu }
+scm: { repo: git@github.com:org/sales-dashboard.git, branch: main }
+deploy:
+  strategy: native
+  preinstall: ["python3 -m venv .venv", ".venv/bin/pip install -U pip wheel", ".venv/bin/pip install -r requirements.txt"]

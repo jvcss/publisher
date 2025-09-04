@@ -1,0 +1,32 @@
+name: my-fastapi
+kind: fastapi # fastapi | streamlit | flutter | docker
+fqdn: api.example.com
+ssl: true # enable certbot
+apache:
+  template: fastapi.conf.j2
+  http_to_https: true
+  log_prefix: myfastapi
+backend:
+  host: 127.0.0.1
+  port: 8000
+  working_dir: /srv/my-fastapi
+  entrypoint:
+    venv: /srv/my-fastapi/.venv
+    module: main:app # uvicorn target
+    extra_args: "--workers 2"
+service:
+  template: fastapi.service.j2
+  user: ubuntu
+  group: ubuntu
+
+scm:
+repo: git@github.com:org/my-fastapi.git
+branch: main
+
+deploy:
+  strategy: native # native | docker
+  preinstall: ["python3 -m venv .venv",".venv/bin/pip install -U pip wheel",".venv/bin/pip install -r requirements.txt"]
+
+healthcheck:
+  url: https://api.example.com/health
+  timeout: 5

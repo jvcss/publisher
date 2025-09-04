@@ -1,0 +1,12 @@
+<VirtualHost *:80>
+    ServerName {{ fqdn }}
+
+
+    ProxyPreserveHost On
+    ProxyPass / http://{{ backend_host }}:{{ backend_port }}/
+    ProxyPassReverse / http://{{ backend_host }}:{{ backend_port }}/
+
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ log_prefix }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ log_prefix }}_access.log combined
+</VirtualHost>
