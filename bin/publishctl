@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec python3 /opt/publisher/bin/publishctl.py "$@"
+exec /opt/publisher/.venv/bin/python /opt/publisher/bin/publishctl.py "$@"
